@@ -1,0 +1,53 @@
+$theme : light; // light and dark
+
+$backgrounds : (
+        primary-light : #FFF,
+        secondary-light : #EEEEEE,
+        tertiary-light : #D7D7D7,
+        quarternary-light: #C3C3C3,
+
+        primary-dark : #1c1c1c,
+        secondary-dark : #282828,
+        tertiary-dark : #3C3C3C,
+        quarternary-dark: #505050
+);
+
+$labels : (
+        primary-light : #000,
+        secondary-light : #2C2C2C,
+        tertiary-light : #3C3C3C,
+        quarternary-light: #505050,
+
+        primary-dark: #fff,
+        secondary-dark : #EBEBEB,
+        tertiary-dark : #D7D7D7,
+        quarternary-dark : #C3C3C3,
+);
+
+$action : (
+        primary : #FFBF00,
+        primary-hover : #fffb00,
+        primary-focus : #fffb00,
+        primary-active : #ca9c01,
+        primary-disabled: rgba(255, 191, 0, .5),
+
+        green: #8CDE08,
+        green-hover : #9cff00,
+        green-focus : #9cff00,
+        green-active : #64a201,
+        green-disabled: rgba(100, 161, 1, .5),
+
+        red: #FF4A4A,
+        red-hover : #fd1919,
+        red-focus : #fd1919,
+        red-active : #b02020,
+        red-disabled: rgba(253, 25, 25, .5),
+
+        blue: #3520b9,
+        blue-hover : #3e26d7,
+        blue-focus : #3e26d7,
+        blue-active : #2e1b9b,
+        blue-disabled: rgba(53, 32, 185, .5),
+);
+
+$border-color : rgba(0,0,0, .1);

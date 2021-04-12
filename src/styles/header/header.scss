@@ -1,0 +1,14 @@
+.header{
+
+  &_dark{
+    @include set-fill(secondary, 'dark')
+  }
+
+  &_light{
+    @include set-fill(primary, 'light')
+  }
+
+  &__wrapper{
+    padding : 8px 0;
+  }
+}

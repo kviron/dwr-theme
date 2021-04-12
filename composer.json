@@ -1,0 +1,15 @@
+{
+  "name": "kviron/dwr-theme",
+  "description": "Theme Wordpress for development. Includes: Webpack",
+  "type": "wordpress-theme",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Roman Mamaev",
+      "email": "kviron.web.dev@gmail.com"
+    }
+  ],
+  "require": {
+  }
+}
