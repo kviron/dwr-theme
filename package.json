@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node webpack-config/modes/mode.dev",
     "build": "node webpack-config/modes/mode.build",
-    "build-support": "cross-env AUTOPREFIXER_GRID=autoplace node core/modes/mode.build core/modes/mode.extended"
+    "build-support": "cross-env AUTOPREFIXER_GRID=autoplace node node webpack-config/modes/mode.build node webpack-config/modes/mode.extended"
   },
   "browserslist": [
     "defaults",

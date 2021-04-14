@@ -6,14 +6,13 @@
 # Node
 node_modules
 
-webpack-config/project.config.js
-
 # Dist & test
 test
 dist
 .env
 .env.*
 !.env.example
+
 # BD, logs
 *.log
 *.sql
