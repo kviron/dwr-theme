@@ -1,8 +1,8 @@
 <?php
 $tax_name = 'cat_example';
-$post     = [
+$post_reg = [
     'post_type' => 'example',
-    'menu_name' => 'Название в меню'
+    'menu_name' => __('Название в меню', THEME_SLUG)
 ];
 
 /**
@@ -10,23 +10,23 @@ $post     = [
  */
 add_action( 'init', 'create_taxonomy_example' );
 function create_taxonomy_example(){
-    global $tax_name, $post;
+    global $tax_name, $post_reg;
     // список параметров: wp-kama.ru/function/get_taxonomy_labels
-    register_taxonomy( $tax_name, [ $post['post_type'] ], [
+    register_taxonomy( $tax_name, [ $post_reg['post_type'] ], [
         'label'                 => '', // определяется параметром $labels->name
         'labels'                => [
-            'name'              => 'Категории',
-            'singular_name'     => 'Категория',
-            'search_items'      => 'Найти категорию',
-            'all_items'         => 'Все категории',
-            'view_item '        => 'Посмотреть категорию',
-            'parent_item'       => 'Родительская категория',
-            'parent_item_colon' => 'Родительские категории:',
-            'edit_item'         => 'Изменить категорию',
-            'update_item'       => 'Обновить',
-            'add_new_item'      => 'Добавить категорию',
-            'new_item_name'     => 'Новое имя категории',
-            'menu_name'         => 'Категории',
+            'name'              => __('Категории', THEME_SLUG),
+            'singular_name'     => __('Категория', THEME_SLUG),
+            'search_items'      => __('Найти категорию', THEME_SLUG),
+            'all_items'         => __('Все категории', THEME_SLUG),
+            'view_item '        => __('Посмотреть категорию', THEME_SLUG),
+            'parent_item'       => __('Родительская категория', THEME_SLUG),
+            'parent_item_colon' => __('Родительские категории:', THEME_SLUG),
+            'edit_item'         => __('Изменить категорию', THEME_SLUG),
+            'update_item'       => __('Обновить', THEME_SLUG),
+            'add_new_item'      => __('Добавить категорию', THEME_SLUG),
+            'new_item_name'     => __('Новое имя категории', THEME_SLUG),
+            'menu_name'         => __('Категории', THEME_SLUG),
         ],
         'description'           => '', // описание таксономии
         'public'                => true,
@@ -57,22 +57,22 @@ function create_taxonomy_example(){
 add_action('init', 'register_post_types_example');
 function register_post_types_example()
 {
-    global $post, $tax_name;
-    register_post_type($post['post_type'], [
+    global $post_reg, $tax_name;
+    register_post_type($post_reg['post_type'], [
         'label'         => null,
         'labels'        => [
-            'name'               => $post['menu_name'],      // основное название для типа записи
-            'singular_name'      => '____',                  // название для одной записи этого типа
-            'add_new'            => 'Добавить ____',         // для добавления новой записи
-            'add_new_item'       => 'Добавление ____',       // заголовка у вновь создаваемой записи в админ-панели.
-            'edit_item'          => 'Редактирование ____',   // для редактирования типа записи
-            'new_item'           => 'Новое ____',            // текст новой записи
-            'view_item'          => 'Смотреть ____',         // для просмотра записи этого типа.
-            'search_items'       => 'Искать ____',           // для поиска по этим типам записи
-            'not_found'          => 'Не найдено',            // если в результате поиска ничего не было найдено
-            'not_found_in_trash' => 'Не найдено в корзине',  // если не было найдено в корзине
-            'parent_item_colon'  => '',                      // для родителей (у древовидных типов)
-            'menu_name'          => $post['menu_name'],      // название меню
+            'name'               => $post_reg['menu_name'],      // основное название для типа записи
+            'singular_name'      => __('____', THEME_SLUG),                  // название для одной записи этого типа
+            'add_new'            => __('Добавить ____', THEME_SLUG),         // для добавления новой записи
+            'add_new_item'       => __('Добавление ____', THEME_SLUG),       // заголовка у вновь создаваемой записи в админ-панели.
+            'edit_item'          => __('Редактирование ____', THEME_SLUG),   // для редактирования типа записи
+            'new_item'           => __('Новое ____', THEME_SLUG),            // текст новой записи
+            'view_item'          => __('Смотреть ____', THEME_SLUG),         // для просмотра записи этого типа.
+            'search_items'       => __('Искать ____', THEME_SLUG),           // для поиска по этим типам записи
+            'not_found'          => __('Не найдено', THEME_SLUG),            // если в результате поиска ничего не было найдено
+            'not_found_in_trash' => __('Не найдено в корзине', THEME_SLUG),  // если не было найдено в корзине
+            'parent_item_colon'  => __('', THEME_SLUG),                      // для родителей (у древовидных типов)
+            'menu_name'          => $post_reg['menu_name'],      // название меню
         ],
         'description'   => '',
         'public'        => true,
@@ -83,7 +83,7 @@ function register_post_types_example()
         'show_in_menu'  => null,                             // показывать ли в меню адмнки
         // 'show_in_admin_bar'   => null,                    // зависит от show_in_menu
         'show_in_rest'  => false,                            // Включаем поддержку Gutenberg
-        'rest_base'     => $post['post_type'],               // $post_type. C WP 4.7
+        'rest_base'     => $post_reg['post_type'],               // $post_type. C WP 4.7
         'menu_position' => null,
         'menu_icon'     => null,
         //'capability_type'   => 'post',
@@ -109,9 +109,11 @@ function register_post_types_example()
 add_action('pre_get_posts', 'get_example_search_filter');
 function get_example_search_filter($query)
 {
+    global $post_reg;
+
     if (!is_admin() && $query->is_main_query() && $query->is_search) {
         $query->set('post_type', [
-            'example'
+            $post_reg['post_type']
         ]);
     }
 }
