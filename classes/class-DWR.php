@@ -2,8 +2,6 @@
 
 /**
  * Class DWR
- *
- *
  */
 class DWR {
     /**
@@ -13,33 +11,25 @@ class DWR {
 
     /**
      * @var array
-     * Params vars
      */
-    public static $vars = [];
-
     public static $item = [];
 
+    /**
+     * @param $theme_path - Init theme path in class
+     * @param $theme_url - Init theme url in class
+     * @param string $items_default
+     */
     public static function init($theme_path, $theme_url, $items_default = 'template-parts/items/item-')
     {
-        self::set_theme_url($theme_url);
-        self::set_theme_path($theme_path);
-        self::$item['path'] = $items_default;
-    }
-
-    public static function set_theme_url($url_site)
-    {
-        self::$theme['url'] = $url_site;
+        self::$theme['url']  = $theme_url;
+        self::$theme['path'] = $theme_path;
+        self::$item['path']  = $items_default;
     }
 
     /**
-     * Set path theme
+     * @param $post_type  - post type from getting posts
+     * @param array $args - array arguments
      */
-    public static function set_theme_path($path_theme)
-    {
-        self::$theme['path'] = $path_theme;
-    }
-
-
     public static function the_posts($post_type, $args = [])
     {
         global $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
@@ -69,6 +59,11 @@ class DWR {
         wp_reset_postdata();
     }
 
+    /**
+     * @param $post_type
+     * @param array $args
+     * @return WP_Query
+     */
     public static function get_posts($post_type, $args = [])
     {
         global $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
@@ -88,6 +83,9 @@ class DWR {
         return $query;
     }
 
+    /**
+     * @return string - return type current page
+     */
     public static function get_type_page()
     {
         if (is_front_page()) {
@@ -99,33 +97,45 @@ class DWR {
         } elseif (is_page()) {
             return 'page';
         }
-        return 'diff';
+        return 'error';
     }
 
+    /**
+     * @param $_template_file
+     * @param array $args
+     * @param false $require_once
+     * Require template parts based on load_template()
+     */
     public static function get_template($_template_file, $args = [], $require_once = false)
     {
         global $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
 
-        ob_start();
+        $file = self::$theme['path'] . '/' . $_template_file . '.php';
 
-        if (is_array($args)) {
-            extract($args, EXTR_SKIP);
-        }
+        if (file_exists($file)){
+            ob_start();
 
-        if (is_array($wp_query->query_vars)) {
-            extract($wp_query->query_vars, EXTR_SKIP);
-        }
+            if (is_array($args)) {
+                extract($args, EXTR_SKIP);
+            }
 
-        if (isset($s)) {
-            $s = esc_attr($s);
-        }
+            if (is_array($wp_query->query_vars)) {
+                extract($wp_query->query_vars, EXTR_SKIP);
+            }
 
-        if ($require_once) {
-            require_once self::$theme['path'] . '/' . $_template_file . '.php';
-        } else {
-            require self::$theme['path'] . '/' . $_template_file . '.php';
+            if (isset($s)) {
+                $s = esc_attr($s);
+            }
+
+            if ($require_once) {
+                require_once $file;
+            } else {
+                require $file;
+            }
+            echo ob_get_clean();
+        }else{
+            return false;
         }
-        echo ob_get_clean();
     }
 
     static function loop_posts($query, $tmp_path, $args = [])
@@ -153,9 +163,8 @@ class DWR {
 
     public static function create_pagination($posts, $args = [])
     {
-        $posts_per_page = 10;
         $total_items    = count($posts);
-        $total_pages    = ceil($total_items / $items_per_page);
+        $total_pages    = ceil($total_items / ($args['posts_per_page'] ?? 10));
 
         if (get_query_var('paged')) {
             $current_page = get_query_var('paged');
@@ -164,10 +173,9 @@ class DWR {
         } else {
             $current_page = 1;
         }
-        $starting_point = ( ( $current_page - 1 ) * $items_per_page );
+        $starting_point = ( ( $current_page - 1 ) * ($args['posts_per_page'] ?? 10) );
 
         $big        = 999999999;
-        $translated = __('', 'pixplus');
 
         paginate_links(
             [
@@ -175,8 +183,8 @@ class DWR {
                 'format'             => '?paged=%#%',
                 'current'            => $current_page,
                 'total'              => $total_pages,
-                'before_page_number' => '<span class="screen-reader-text">' . $translated . ' </span>',
-                'prev_text'          => ( '<' ),
+                'before_page_number' => '<span class="screen-reader-text">' . __('', THEME_SLUG) . ' </span>',
+                'prev_text'          => __('<'),
                 'next_text'          => __('>'),
             ]);
     }

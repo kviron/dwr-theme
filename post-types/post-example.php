@@ -93,7 +93,6 @@ function register_post_types_example()
         'supports'      => [
             'title',
             'editor',
-            'post-formats'
         ], // 'title','editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'
         'taxonomies'    => [ $tax_name ],
         'has_archive'   => false,
