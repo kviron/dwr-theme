@@ -3,7 +3,7 @@
 /**
  * Declaring constants
  */
-define('THEME_VERSION', '0.0.1);
+define('THEME_VERSION', '0.0.1');
 define('THEME_PATH', get_template_directory());
 define('THEME_URL', get_template_directory_uri());
 define('THEME_ASSETS', THEME_URL . '/assets');
