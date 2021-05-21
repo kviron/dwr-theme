@@ -43,8 +43,6 @@ browserSync.init({
 			fn: function (snippet, match) {
 				return `
 					${snippet}${match}
-					<script defer src="${getPublicPath(publicFolder)}js/app.js"></script>
-					<script defer src="${getPublicPath(publicFolder)}js/vendors.js"></script>
 				`;
 			}
 		}
