@@ -10,18 +10,32 @@
 }
 
 
-@mixin getFontSizeTitle($scale, $fs-base){
+@mixin getFontSizeTitle($scale, $fs-base, $sizes: ()){
 
   @for $i from 1 through 6 {
     @if ($i < 6){
       h#{$i}{
+        font-size: (fontSizeTitle($scale, $fs-base, $i) * 0.8);
+
+        @each $key, $value in $sizes {
+          @include media-breakpoint-up($key){
+            font-size: (fontSizeTitle($scale, $fs-base, $i) * $value);
+          }
+        }
+      }
+
+      .title-h#{$i}{
         font-size: fontSizeTitle($scale, $fs-base, $i);
       }
     }
-   @if ($i == 6){
-     h#{$i}{
-       font-size: fontSizeTitle($scale - 0.5, $fs-base, $i);
-     }
-   }
+    @if ($i == 6){
+      h#{$i}{
+        font-size: fontSizeTitle($scale - 0.5, $fs-base, $i);
+      }
+
+      .title-h#{$i}{
+        font-size: fontSizeTitle($scale - 0.5, $fs-base, $i);
+      }
+    }
   }
 }
