@@ -1,59 +1,55 @@
 <?php
+
+namespace DWR;
+
+use WP_Query;
+
 /**
  * Class DWR
- *
+ * @implements DWRTemplate
  *
  */
-class DWR
+class DWR implements DWRTemplate
 {
     /**
      * @var array
+     * Array paths a wordpress theme
      */
-    public static array $theme = [];
+    protected static array $options = [
+        'location'         => null,
+        'themeUri'         => null,
+        'themeVersion'     => null,
+        'themePath'        => null,
+        'themeSlug'        => null,
+        'themeAssetsPath'  => null,
+        'themeAssetsUri'   => null,
+        'componentsDir'    => null,
+        'templatePagesDir' => null,
+        'templatePartsDir' => null,
+        'itemsPath'        => null,
+    ];
 
-    /**
-     * @var array
-     * Params vars
-     */
-    public static array $vars = [];
-
-    /**
-     * @var array
-     * Params vars
-     */
-    public static array $item = [];
-
-    public static function init($theme_path, $theme_url, $items_default = 'template-parts/items/item-')
+    public static function init($args = [])
     {
-        self::set_theme_url($theme_url);
-        self::set_theme_path($theme_path);
-        self::$item['path'] = $items_default;
-    }
-
-    public static function set_theme_url($url_site)
-    {
-        self::$theme['url'] = $url_site;
-    }
-
-    /**
-     * Set path theme
-     */
-    public static function set_theme_path($path_theme)
-    {
-        self::$theme['path'] = $path_theme;
+        self::$options['themeUri']        = $args['themeUri'] ?? get_template_directory_uri();
+        self::$options['themePath']       = $args['themePath'] ?? get_template_directory();
+        self::$options['templateParts']   = $args['templateParts'] ?? self::$options['themePath'] . '/template-parts';
+        self::$options['itemPath']        = $args['itemPath'] ?? self::$options['templateParts'] . 'items/item-';
+        self::$options['themeAssetsPath'] = $args['themeAssetsPath'] ?? self::$options['themePath'] . '/assets';
+        self::$options['themeAssetsUri']  = $args['themeAssetsUri'] ?? self::$options['themeUri'] . '/assets';
     }
 
 
-    public static function the_posts($args = [])
+    public static function thePosts($args = []): void
     {
         global $wp_query;
 
         $args['post_type'] = $args['post_type'] ?? get_query_var('post_type');
         $state             = $args['state'] ?? 'private';
-        $tmp_path          = $args['template'] ?? self::$item['path'] . $args['post_type'];
+        $tmp_path          = $args['template'] ?? self::$options['itemPath'] . $args['post_type'];
 
         if ($state === 'private' && $wp_query->have_posts()) {
-            self::loop_posts($wp_query, $tmp_path, $args);
+            self::loopPosts($wp_query, $tmp_path, $args);
         } else if ($state === 'global') {
             if (!isset($args['paged'])) {
                 $args['paged'] = get_query_var('paged') ? absint(get_query_var('paged')) : 1;
@@ -65,23 +61,21 @@ class DWR
 
             $query = new WP_Query($args);
 
-            if ($query->have_posts()){
-                self::loop_posts($query, $tmp_path, $args);
-            } else{
-                return false;
+            if ($query->have_posts()) {
+                self::loopPosts($query, $tmp_path, $args);
             }
         }
 
-        wp_reset_postdata();
+        $wp_query->reset_postdata();
     }
 
-    public static function get_posts($post_type, $args = [])
+    public static function getPosts($post_type, $args = [])
     {
         global $wp_query;
 
         $args['post_type'] = $args['post_type'] ?? get_query_var('post_type');
         $state             = $args['state'] ?? 'private';
-        $tmp_path          = $args['template'] ?? self::$item['path'] . $args['post_type'];
+        $tmp_path          = $args['template'] ?? self::$options['itemPath'] . $args['post_type'];
 
         if ($state === 'private') {
             $query = $wp_query->have_posts();
@@ -89,15 +83,15 @@ class DWR
             $query = new WP_Query($args);
         }
 
-        wp_reset_postdata();
+        $wp_query->reset_postdata();
 
         return $query;
     }
 
-    public static function get_type_page()
+    public static function getTypePage(): ?string
     {
         if (is_front_page()) {
-            return 'front_page';
+            return 'front-page';
         } elseif (is_archive()) {
             return 'archive';
         } elseif (is_single()) {
@@ -105,14 +99,12 @@ class DWR
         } elseif (is_page()) {
             return 'page';
         }
-        return 'diff';
+        return null;
     }
 
-    public static function get_template($_template_file, $args = [], ...$vars)
+    public static function template($_template_file, $args = []): void
     {
         global $wp_query;
-
-        ob_start();
 
         if (is_array($args)) {
             extract($args, EXTR_SKIP);
@@ -126,19 +118,37 @@ class DWR
             $s = esc_attr($s);
         }
 
-        $file_path = self::$theme['path'] . '/' . $_template_file . '.php';
+        $file_path = self::$options['themePath'] . '/' . $_template_file . '.php';
 
         if (isset($args['require_once']) && file_exists($file_path)) {
             require_once $file_path;
-        } elseif(file_exists($file_path)) {
+        } elseif (file_exists($file_path)) {
             require $file_path;
-        }elseif(!file_exists($file_path)){
+        } elseif (!file_exists($file_path)) {
             printf('Файла по пути %1s ненайден', $file_path);
         }
+    }
+
+    public static function theTemplate($_template_file, $args = [])
+    {
+        ob_start();
+        self::template($_template_file, $args);
         echo ob_get_clean();
     }
 
-    static function loop_posts($query, $tmp_path, $args = [])
+    public static function getTemplate($_template_file, $args = [])
+    {
+        ob_start();
+        self::template($_template_file, $args);
+        return ob_get_clean();
+    }
+
+    /**
+     * @param $query
+     * @param $tmp_path
+     * @param array $args
+     */
+    public static function loopPosts($query, $tmp_path, $args = []): void
     {
         $counter = 0;
         while ($query->have_posts()) {
@@ -146,7 +156,7 @@ class DWR
             global $post;
             echo $args['container']['start'] ?? null;
 
-            self::get_template(
+            self::theTemplate(
                 $tmp_path,
                 [
                     'post'          => $post ?? null,
@@ -162,7 +172,7 @@ class DWR
         }
     }
 
-    public static function create_pagination($posts, $args = [])
+    public static function createPagination($posts, $args = []): void
     {
         $posts_per_page = $args['posts_per_page'] ?? 10;
         $total_items    = count($posts);
@@ -175,7 +185,7 @@ class DWR
         } else {
             $current_page = 1;
         }
-        $starting_point = ( ( $current_page - 1 ) * $posts_per_page  );
+        $starting_point = (($current_page - 1) * $posts_per_page);
 
         $big        = 999999999;
         $translated = __('', 'pixplus');
@@ -187,19 +197,30 @@ class DWR
                 'current'            => $current_page,
                 'total'              => $total_pages,
                 'before_page_number' => '<span class="screen-reader-text">' . $translated . ' </span>',
-                'prev_text'          => ( '<' ),
+                'prev_text'          => ('<'),
                 'next_text'          => __('>'),
             ]
         );
     }
 
-    public static function the_post_content(){
+    public static function getPostContent($action = 'echo'): ?string
+    {
         global $post;
 
         if (get_the_content()) {
-            the_content();
+            if ($action === 'echo') {
+                the_content();
+            } elseif ($action === 'return') {
+                return $post->post_content;
+            }
         } else {
-            printf('<div class="not-content">%s</div>',__('Тут еще нет никакого описания, но оно скоро появится', 'amber'));
+            if ($action === 'echo') {
+                printf('<div class="not-content">%s</div>', __('Тут еще нет никакого описания, но оно скоро появится', 'amber'));
+            } elseif ($action === 'return') {
+                return sprintf('<div class="not-content">%s</div>', __('Тут еще нет никакого описания, но оно скоро появится', 'amber'));
+            }
         }
+
+        return null;
     }
 }
