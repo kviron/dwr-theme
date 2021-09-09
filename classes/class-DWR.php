@@ -9,7 +9,7 @@ use WP_Query;
  * @implements DWRTemplate
  *
  */
-class DWR implements DWRTemplate
+class DWR
 {
     /**
      * @var array
