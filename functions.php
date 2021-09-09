@@ -47,5 +47,4 @@ require THEME_PATH . "/template-parts/header/_init.php";
 /**
  * Init Classes
  */
-\DWR\DWR::init();
-ACF_Archive::instance();
+\CE\CE::init();
