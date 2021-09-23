@@ -43,6 +43,7 @@ require THEME_PATH . "/includes/_index.php";
  * Add includes
  */
 require THEME_PATH . "/template-parts/header/_init.php";
+require THEME_PATH . "/template-parts/footer/_init.php";
 
 /**
  * Init Classes
