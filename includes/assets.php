@@ -24,15 +24,15 @@ function IEhtml5_shim_func(){
 //Enqueue styles
 add_action( 'wp_enqueue_scripts', 'load_style', 11 );
 function load_style() {
-    wp_enqueue_style( 'vendor-css', THEME_ASSETS . '/css/vendors.css', false, '1.0' );
-    wp_enqueue_style( 'app-css', THEME_ASSETS . '/css/app.css', 'vendor-css', '1.0' );
+    wp_enqueue_style( 'vendor-css', THEME_ASSETS . '/css/vendors.css', false, THEME_VERSION );
+    wp_enqueue_style( 'app-css', THEME_ASSETS . '/css/app.css', 'vendor-css', THEME_VERSION );
 }
 
 //Enqueue scripts
 add_action( 'wp_enqueue_scripts', 'load_scripts', 20 );
 function load_scripts() {
-    wp_enqueue_script( 'vendors-js', THEME_ASSETS . '/js/vendors.js', 'jquery', '1.0', true );
-    wp_enqueue_script( 'app-js', THEME_ASSETS . '/js/app.js', 'jquery', '1.0', true );
+    wp_enqueue_script( 'vendors-js', THEME_ASSETS . '/js/vendors.js', 'jquery', THEME_VERSION, true );
+    wp_enqueue_script( 'app-js', THEME_ASSETS . '/js/app.js', 'jquery', THEME_VERSION, true );
 }
 
 
