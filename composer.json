@@ -11,5 +11,6 @@
     }
   ],
   "require": {
+    "symfony/asset": "^5.3"
   }
 }

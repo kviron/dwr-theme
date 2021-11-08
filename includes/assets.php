@@ -1,10 +1,16 @@
 <?php
+use Symfony\Component\Asset\Package;
+use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
+
+$package = new Package(new JsonManifestVersionStrategy(THEME_PATH . '/assets/assets.json'));
+
 /**
  * Изменяет URL расположения jQuery файла только для фронт-энда
  */
-if( ! is_admin() ){
+if (!is_admin()) {
     add_action('wp_enqueue_scripts', 'jquery_enqueue_func', 11);
-    function jquery_enqueue_func(){
+    function jquery_enqueue_func()
+    {
         wp_deregister_script('jquery');
         wp_register_script('jquery', "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js", false, null, true);
         wp_enqueue_script('jquery');
@@ -14,26 +20,38 @@ if( ! is_admin() ){
 /**
  * Подключение скрипта html5 для IE с cdn
  */
-add_action('wp_head', 'IEhtml5_shim_func');
-function IEhtml5_shim_func(){
+add_action('wp_head', function () {
     echo '<!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script><![endif]-->';
-    // или если нужна еще и поддержка при печати
     echo '<!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script><![endif]-->';
-}
+});
+
 
 //Enqueue styles
-add_action( 'wp_enqueue_scripts', 'load_style', 11 );
-function load_style() {
-    wp_enqueue_style( 'vendor-css', THEME_ASSETS . '/css/vendors.css', false, THEME_VERSION );
-    wp_enqueue_style( 'app-css', THEME_ASSETS . '/css/app.css', 'vendor-css', THEME_VERSION );
+add_action('wp_enqueue_scripts', 'load_style', 11);
+function load_style()
+{
+    global $package;
+    wp_enqueue_style('vendor-css', THEME_ASSETS . '/' . $package->getUrl('vendors.css'), false, false);
+    wp_enqueue_style('app-css', THEME_ASSETS . '/' . $package->getUrl('app.css'), 'vendor-css', false);
 }
 
 //Enqueue scripts
-add_action( 'wp_enqueue_scripts', 'load_scripts', 20 );
-function load_scripts() {
-    wp_enqueue_script( 'vendors-js', THEME_ASSETS . '/js/vendors.js', 'jquery', THEME_VERSION, true );
-    wp_enqueue_script( 'app-js', THEME_ASSETS . '/js/app.js', 'jquery', THEME_VERSION, true );
+add_action('wp_enqueue_scripts', 'load_scripts', 20);
+function load_scripts()
+{
+    global $package;
+    wp_enqueue_script('vendors-js', THEME_ASSETS . '/' . $package->getUrl('vendors.js'), 'jquery', false, true);
+    wp_enqueue_script('app-js', THEME_ASSETS . '/' . $package->getUrl('app.js'), 'jquery', false, true);
 }
 
-
-
+//Передаем данные переменные в JS  -----------------------
+add_action('wp_enqueue_scripts', 'add_global_vars', 99);
+function add_global_vars()
+{
+    $site = [
+        'themeUrl'       => THEME_URL,
+        'themePath'      => THEME_PATH,
+        'themeAssetsUri' => THEME_ASSETS
+    ];
+    wp_localize_script('app-js', 'site', $site);
+}

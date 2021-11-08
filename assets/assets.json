@@ -1,0 +1,9 @@
+{
+  "_/node_modules/lightgallery/fonts/lightgallery-bundle.min.css": "_/node_modules/lightgallery/fonts/lg.ttf",
+  "_/node_modules/lightgallery/images/lightgallery-bundle.min.css": "_/node_modules/lightgallery/images/loading.gif",
+  "app.css": "css/app.1be7921ca41d877517d0.css",
+  "app.js": "js/app.1be7921ca41d877517d0.js",
+  "fonts/index.scss": "fonts/calibri_light.ttf",
+  "vendors.css": "css/vendors.1be7921ca41d877517d0.css",
+  "vendors.js": "js/vendors.1be7921ca41d877517d0.js"
+}

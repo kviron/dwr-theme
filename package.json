@@ -68,7 +68,8 @@
     "terser-webpack-plugin": "^2.3.5",
     "webpack": "^4.42.0",
     "webpack-dev-middleware": "^3.7.2",
-    "webpack-hot-middleware": "^2.25.0"
+    "webpack-hot-middleware": "^2.25.0",
+    "webpack-assets-manifest": "^1.0.0"
   },
   "dependencies": {
     "@babel/polyfill": "^7.11.5",

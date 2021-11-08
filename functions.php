@@ -1,8 +1,25 @@
 <?php
+/*
+|--------------------------------------------------------------------------
+| Регистрация автозагрузчика composer
+|--------------------------------------------------------------------------
+|
+| Composer provides a convenient, automatically generated class loader for
+| our theme. We will simply require it into the script here so that we
+| don't have to worry about manually loading any of our classes later on.
+|
+*/
+if (! file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
+    wp_die(__('Ошибка загрузки. Пожалуйста выполните <code>composer install</code>.', 'sage'));
+}
 
-/**
- * Declaring constants
- */
+require $composer;
+
+/*
+|--------------------------------------------------------------------------
+| Обьявление переменных темы
+|--------------------------------------------------------------------------
+*/
 define('THEME_VERSION', '0.0.1');
 define('THEME_PATH', get_template_directory());
 define('THEME_URL', get_template_directory_uri());
@@ -40,10 +57,9 @@ require THEME_PATH . "/manifest/_index.php";
 require THEME_PATH . "/includes/_index.php";
 
 /**
- * Add includes
+ * Add layouts
  */
-require THEME_PATH . "/template-parts/header/_init.php";
-require THEME_PATH . "/template-parts/footer/_init.php";
+require THEME_PATH . "/template-parts/layouts/_init.php";
 
 /**
  * Init Classes
