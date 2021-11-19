@@ -1,11 +1,27 @@
-<div align="center">
-  <img width="200" height="200" src="https://webpack.js.org/assets/icon-square-big.svg">
-  <h1>Webpack Template wordpress</h1>
-  <p>
-    Webpack is a module bundler. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable of transforming, bundling, or packaging just about any resource or asset.
-  </p>
-</div>
+#DWR-Theme
+Шаблон темы wordpress c подключенным Webpack.
 
-Not ready
+##Зависимости
+ - Node js 14.16.1
+ - PHP 7.1
+ - composer 2.0
 
-Copyright (c) 2020-present, [Tellgat](https://github.com/Tellgat)
+##Установка
+В папке `themes` выполните команду
+```shell
+composer create-project kviron/dwr-theme <имя темы>
+```
+
+Эта команда создаст папку с темой и локальный файл настроек `.env` для конфигурации
+Webpack
+
+##Работа с WebPack
+Что бы сбилдить ваши стили и скрипты для продакшена нужно выполнить команду
+```shell
+npm run build
+```
+
+Запустить локальный сервер с отслеживанием изменений
+```shell
+npm start
+```

@@ -1,7 +1,7 @@
 {
   "name": "kviron/dwr-theme",
   "description": "Theme Wordpress for development. Includes: Webpack",
-  "type": "wordpress-theme",
+  "type": "project",
   "minimum-stability": "stable",
   "license": "proprietary",
   "authors": [
@@ -13,5 +13,10 @@
   "require": {
     "symfony/asset": "^5.3",
     "kviron/wp-component-engine": "^0.0.3"
+  },
+  "scripts": {
+    "post-root-package-install": [
+      "php -r \"copy('.env.example', '.env');\""
+    ]
   }
 }

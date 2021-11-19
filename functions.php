@@ -63,6 +63,6 @@ require THEME_PATH . "/template-parts/layouts/_init.php";
 
 \Kviron\CE::init(
     [
-        'debug' => true,
+        'debug' => WP_DEBUG,
     ]
 );
