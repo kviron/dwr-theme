@@ -1,0 +1,6 @@
+{
+  "app.css": "css/app.css",
+  "app.js": "js/app.js",
+  "vendors.css": "css/vendors.css",
+  "vendors.js": "js/vendors.js"
+}

@@ -4,8 +4,48 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf5be8585805354c6de68b03b52c4bf9",
+    "content-hash": "83c0fe614f5e90528d68d54c5575a489",
     "packages": [
+        {
+            "name": "kviron/wp-component-engine",
+            "version": "0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kviron/wp-component-engine.git",
+                "reference": "0eeeae04e4df0b516f012c5cc604fa634d947650"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kviron/wp-component-engine/zipball/0eeeae04e4df0b516f012c5cc604fa634d947650",
+                "reference": "0eeeae04e4df0b516f012c5cc604fa634d947650",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "resources/CE.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Kviron",
+                    "email": "kviron.web.dev@gmail.com"
+                }
+            ],
+            "description": "PHP Package for Wordpress",
+            "support": {
+                "issues": "https://github.com/kviron/wp-component-engine/issues",
+                "source": "https://github.com/kviron/wp-component-engine/tree/0.0.3"
+            },
+            "time": "2021-11-19T08:43:55+00:00"
+        },
         {
             "name": "symfony/asset",
             "version": "v5.3.4",

@@ -11,6 +11,7 @@
     }
   ],
   "require": {
-    "symfony/asset": "^5.3"
+    "symfony/asset": "^5.3",
+    "kviron/wp-component-engine": "^0.0.3"
   }
 }

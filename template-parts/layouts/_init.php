@@ -1,7 +1,7 @@
 <?php
-use CE\CE;
+use Kviron\CE;
 
-add_action('get_header', 'get_header_site');
+add_action('get_site_header', 'get_header_site');
 function get_header_site()
 {
     CE::theTemplate('template-parts/layouts/header', [

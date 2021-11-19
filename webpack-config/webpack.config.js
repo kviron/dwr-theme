@@ -25,7 +25,7 @@ module.exports = ( options ) => {
         output: {
             path: path.resolve(outputFolder),
             publicPath: getPublicPath(publicFolder),
-            filename: 'js/[name].js'
+            filename: 'js/[name].[hash].js'
         },
 
         optimization: {
@@ -189,7 +189,7 @@ module.exports = ( options ) => {
             ] : [
                 new CleanWebpackPlugin(),
                 new MiniCssExtractWebpackPlugin({
-                    filename: 'css/[name].css',
+                    filename: 'css/[name].[hash].css',
                 }),
                 new CopyWebpackPlugin([
                     path.resolve(outputFolder)

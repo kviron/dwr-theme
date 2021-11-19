@@ -9,7 +9,7 @@
 | don't have to worry about manually loading any of our classes later on.
 |
 */
-if (! file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
+if (!file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
     wp_die(__('Ошибка загрузки. Пожалуйста выполните <code>composer install</code>.', 'sage'));
 }
 
@@ -29,7 +29,7 @@ define('THEME_SLUG', 'dwr-theme');
 /**
  * Add classes
  */
-require_once  THEME_PATH . "/classes/_init.php";
+require_once THEME_PATH . "/classes/_init.php";
 
 /**
  * Add carbon-fields plugin
@@ -61,7 +61,8 @@ require THEME_PATH . "/includes/_index.php";
  */
 require THEME_PATH . "/template-parts/layouts/_init.php";
 
-/**
- * Init Classes
- */
-\CE\CE::init();
+\Kviron\CE::init(
+    [
+        'debug' => true,
+    ]
+);
