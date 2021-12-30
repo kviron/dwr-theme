@@ -10,12 +10,22 @@
       "email": "kviron.web.dev@gmail.com"
     }
   ],
+  "autoload": {
+    "psr-4": { "": ["classes/"] },
+    "files": [
+      "post-types/_index.php",
+      "includes/_index.php",
+      "settings/_index.php",
+      "manifest/_index.php",
+      "custom-fields/_init.php"
+    ]
+  },
   "require": {
-    "symfony/asset": "^5.3",
-    "kviron/wp-component-engine": "^0.0.3"
+    "symfony/asset": "5.3",
+    "kviron/wp-component-engine": "^0.0.4"
   },
   "scripts": {
-    "post-root-package-install": [
+    "post-create-project-cmd": [
       "php -r \"copy('.env.example', '.env');\""
     ]
   }

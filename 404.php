@@ -10,6 +10,10 @@
 get_header();
 ?>
 
+    <div class="container" style="text-align: center">
+        <h1 class="title">Ошибка 404</h1>
+        <span><?php _e('Такой страницы не существует', 'dwr-theme') ?> <a href="<?php bloginfo('home'); ?>">Главная</a></span>
+    </div>
 
 <?php
 get_footer();

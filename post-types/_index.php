@@ -2,7 +2,7 @@
 /**
 * Раздел подключения новых типов постов
 */
-//require_once 'post-example.php';
+require_once 'post-example.php';
 
 /**
  * Добавляем типы записей в результат поиска

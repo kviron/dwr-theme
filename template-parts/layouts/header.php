@@ -1,3 +1,5 @@
-<header class="header" style="background-color: #1c1c1c; padding: 15px; margin-bottom: 15px; color: #fff;">
-    --HEADER--
+<header class="header">
+    <div class="header__container container">
+        <a href="<?php bloginfo('home'); ?>" class="logo"><span class="title title-h2">DWR-theme</span></a>
+    </div>
 </header>

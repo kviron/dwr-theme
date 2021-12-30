@@ -1,16 +1,20 @@
 <?php
-use Kviron\CE;
+use Kviron\CE\CE;
 
-add_action('get_site_header', 'get_header_site');
-function get_header_site()
+add_action('dwr_custom_header', 'dwr_custom_header');
+function dwr_custom_header()
 {
-    CE::theTemplate('template-parts/layouts/header', [
-        'className' => CE::getPageType(),
-    ]);
+    CE::theTemplate('template-parts/layouts/header');
 }
 
-add_action('get_footer', 'get_footer_site');
-function get_footer_site()
+add_action('wp_head', 'dwr_custom_head');
+function dwr_custom_head()
+{
+    CE::theTemplate('template-parts/layouts/head');
+}
+
+add_action('dwr_custom_footer', 'dwr_custom_footer');
+function dwr_custom_footer()
 {
     CE::theTemplate('template-parts/layouts/footer');
 }

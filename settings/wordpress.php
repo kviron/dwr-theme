@@ -267,7 +267,7 @@ add_filter('wp_prepare_attachment_for_js', 'change_empty_alt_to_title');
  *
  * @version 3.0
  */
-
+//
 if (is_admin() && !class_exists('Term_Meta_Image')) {
 
     // init

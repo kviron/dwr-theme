@@ -183,7 +183,7 @@ module.exports = ( options ) => {
                 new WebpackAssetsManifest({
                     output: 'assets.json',
                     space: 2,
-                    writeToDisk: false,
+                    writeToDisk: true,
                     assets: {},
                 })
             ] : [
@@ -211,7 +211,7 @@ module.exports = ( options ) => {
                 new WebpackAssetsManifest({
                     output: 'assets.json',
                     space: 2,
-                    writeToDisk: false,
+                    writeToDisk: true,
                     assets: {},
                 })
             ])

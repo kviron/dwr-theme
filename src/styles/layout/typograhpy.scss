@@ -41,7 +41,7 @@ $paragraph-margin-bottom    : 1rem;
 }
 
 h1, h2, h3, h4, h5, h6, .title {
-  margin         : 2.5rem 0 1.38rem;
+  margin         : 0;
   font-family    : $font-family-header-base;
   font-weight    : $font-weight-header-base;
   line-height    : $line-height-header-base;
@@ -49,12 +49,33 @@ h1, h2, h3, h4, h5, h6, .title {
   text-transform : $text-transform-header-base;
 }
 
-h1 {
-  margin-top : 0;
+@mixin ad-font($pcSize, $mobSize) {
+  $maxWidth : 1280;
+  $addSize  : $pcSize - $mobSize;
+  $maxWidth : $maxWidth - 320;
+  font-size : calc(#{$mobSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth}));
 }
 
-//generate font-size for tags h1 - h6, .title_h1 - h6
-@include getFontSizeTitle($font-scale, $font-size-text-base, $sizes-headers-multiplier);
+// Максимальный и минимальный размер адаптивного размера шрифта
+h1, .title-h1 {
+  @include ad-font(49, 28) //Max, Min font-size h1
+}
+
+h2, .title-h2 {
+  @include ad-font(39, 24) //Max, Min font-size h2
+}
+
+h3, .title-h3 {
+  @include ad-font(31, 20) //Max, Min font-size h3
+}
+
+h4, .title-h4 {
+  @include ad-font(25, 18) //Max, Min font-size h4
+}
+
+h5, .title-h5 {
+  @include ad-font(20, 16) //Max, Min font-size h5
+}
 
 
 small, .text_small {
@@ -76,6 +97,14 @@ p {
 
 pre {
   font-size : .8em;
+}
+
+a {
+  color : currentColor;
+
+  &[class] {
+    text-decoration : none;
+  }
 }
 
 
