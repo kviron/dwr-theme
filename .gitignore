@@ -16,6 +16,7 @@ dist
 
 # BD, logs
 *.log
+*.lock
 *.sql
 *.sqlite
 
