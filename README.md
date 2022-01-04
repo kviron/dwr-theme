@@ -17,6 +17,7 @@ composer create-project kviron/dwr-theme <имя темы>
 Webpack
 
 <h2>Работа с WebPack</h2>
+
 Что бы сбилдить ваши стили и скрипты для продакшена нужно выполнить команду
 ```shell
 npm run build
