@@ -16,7 +16,6 @@
       "post-types/_index.php",
       "includes/_index.php",
       "settings/_index.php",
-      "manifest/_index.php",
       "custom-fields/_init.php"
     ]
   },

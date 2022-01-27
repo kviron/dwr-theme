@@ -90,7 +90,7 @@ if (is_admin()) {
 
     // оставим принудительную проверку при заходе на страницу обновлений...
     //remove_action( 'load-update-core.php', 'wp_update_plugins' );
-    //remove_action( 'load-update-core.php', 'wp_update_themes' );
+    remove_action( 'load-update-core.php', 'wp_update_themes' );
 
     // внутренняя страница админки "Update/Install Plugin" или "Update/Install Theme" - оставим не мешает...
     //remove_action( 'load-update.php', 'wp_update_plugins' );

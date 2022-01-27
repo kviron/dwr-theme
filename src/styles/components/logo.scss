@@ -1,5 +1,6 @@
-.logo{
-  font-size   : 1.25rem;
-  font-weight : 900;
-  color       : map-get($action, primary);
+.logo {
+  font-size        : 1.25rem;
+  font-weight      : 900;
+  color            : map-get($action, primary);
+  background-image : url('../../files/icons/logo.svg');
 }

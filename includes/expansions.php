@@ -5,3 +5,7 @@ function show_template(){
     global $template;
     echo $template;
 }
+
+function format_phone($tel){
+    return $tel;
+}
