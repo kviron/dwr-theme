@@ -6,19 +6,24 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const minify = require('optimize-css-assets-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
-const context = 'src';
-const isDev = process.env.NODE_ENV === 'development'
+const mode = process.env.NODE_ENV;
+const isDev = mode === 'development'
 
 module.exports = {
     entry: {
-        app: './index.js',
+        app: './index.js'
     },
-    context: path.resolve(__dirname, 'src'),
+    mode: mode && 'development',
+    context: path.resolve(__dirname, '_src'),
     output: {
         path: path.resolve(__dirname, 'assets'),
-        filename: 'js/[name].[hash].js',
+        publicPath: path.resolve(__dirname, 'assets'),
+        filename: 'js/[name].[contenthash].js',
     },
     optimization: {
         splitChunks: {
@@ -34,12 +39,18 @@ module.exports = {
         ...(!isDev ? {
             minimize: true,
             minimizer: [
+                new minify({}),
                 new TerserPlugin({
                     test: /\.js(\?.*)?$/i,
                     parallel: 4,
                 })
             ],
         } : [])
+    },
+    devtool: 'inline-source-map',
+    devServer: {
+        static: './assets',
+        hot: true,
     },
     resolve: {
         extensions: [
@@ -51,7 +62,14 @@ module.exports = {
             '.jpeg',
             '.png',
             '.svg',
-        ]
+        ],
+        alias: {
+            '@files': path.resolve(__dirname, '_src/files'),
+            '@images': path.resolve(__dirname, '_src/images'),
+            '@icons': path.resolve(__dirname, '_src/files/icons'),
+            '@scripts': path.resolve(__dirname, '_src/scripts'),
+            '@styles': path.resolve(__dirname, '_src/styles'),
+        }
     },
     module: {
         rules: [
@@ -71,15 +89,17 @@ module.exports = {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
                     ...(isDev ? [
-                        {
-                            loader: 'style-loader'
-                        },
-                        {
-                            loader: 'cache-loader'
-                        }
-                    ] : [MiniCssExtractPlugin.loader]),
+                            {
+                                loader: 'style-loader',
+                            },
+                            {
+                                loader: 'cache-loader'
+                            }
+                        ] : [MiniCssExtractPlugin.loader]
+                    ),
                     {
-                        loader: 'css-loader', options: {sourceMap: isDev}
+                        loader: 'css-loader',
+                        options: {sourceMap: isDev}
                     },
                     {
                         loader: "postcss-loader",
@@ -120,23 +140,33 @@ module.exports = {
                 use: ['file-loader']
             },
             {
-                test: /\.svg$/i,
-                include: /.*\.svg/,
-                use: [
-                    {
-                        loader: 'svg-sprite-loader',
-                    },
-                ],
+                test: /\.svg$/,
+                loader: 'svg-sprite-loader',
+                options: {
+                    extract: true,
+                    spriteFilename: svgPath => `sprite.svg`,
+                    symbolId: filePath => path.basename(filePath)
+                }
             }
         ]
     },
     plugins: [
-        new SpriteLoaderPlugin({
-            plainSprite: true
-        }),
+        ...(isDev ? [
+            new BrowserSyncPlugin({
+                proxy: 'http://sage.loc',
+                files: ['**/*.php'],
+                injectCss: true,
+            }, { reload: true, }),
+            new webpack.HotModuleReplacementPlugin(),
+        ] : []),
         new CleanWebpackPlugin(),
+        new CopyPlugin({
+            patterns: [
+                {from: "files", to: "./files"},
+            ],
+        }),
         new MiniCssExtractPlugin({
-            filename: 'css/[name].[hash].css'
+            filename: 'css/[name].[contenthash].css'
         }),
         new WebpackAssetsManifest({
             output: 'assets.json',
@@ -144,10 +174,8 @@ module.exports = {
             writeToDisk: true,
             assets: {},
         }),
-        new CopyPlugin({
-            patterns: [
-                { from: "files", to: "./" },
-            ],
-        }),
+        new SpriteLoaderPlugin({
+            plainSprite: true
+        })
     ],
 }

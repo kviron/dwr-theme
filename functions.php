@@ -25,7 +25,6 @@ define('THEME_SLUG', 'dwr-theme');
 if (!file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
     wp_die(__('Ошибка загрузки. Пожалуйста выполните <code>composer install</code> в папке активной темы', 'sage'));
 }
-
 require $composer;
 
 CE::init(['debug' => WP_DEBUG]);

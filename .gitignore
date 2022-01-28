@@ -11,8 +11,8 @@
 test
 dist
 .env
-.env.*
-!.env.example
+_config/.env.example
+!_config/.env.example
 
 # BD, logs
 *.log

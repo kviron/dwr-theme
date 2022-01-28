@@ -1,0 +1,32 @@
+.header {
+
+  &_dark {
+    @include set-fill(secondary, 'dark')
+  }
+
+  &_light {
+    @include set-fill(primary, 'light')
+  }
+
+  &__wrapper {
+    padding : 8px 0;
+  }
+
+  &__menu {
+    display         : flex;
+    flex-grow       : 1;
+    justify-content : flex-end;
+
+    ul {
+      display     : flex;
+      align-items : center;
+      gap         : 16px;
+      list-style  : none;
+
+      a {
+        text-decoration : none;
+        color           : #000;
+      }
+    }
+  }
+}

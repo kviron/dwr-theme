@@ -1,6 +1,8 @@
 {
-  "app.css": "css/app.da458eec2b5ed166f2ff.css",
-  "app.js": "js/app.da458eec2b5ed166f2ff.js",
-  "icons/loader.svg": "icons/loader.svg",
-  "icons/logo.svg": "icons/logo.svg"
+  "app.js": "js/app.dbee64ed389c95439cf4.js",
+  "files/icons/loader.svg": "files/icons/loader.svg",
+  "files/icons/logo.svg": "files/icons/logo.svg",
+  "files/images/favicon.png": "files/images/favicon.png",
+  "sprite.svg": "sprite.svg",
+  "vendors.js": "js/vendors.a9c0da2516126ee99545.js"
 }
